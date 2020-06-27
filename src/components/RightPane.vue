@@ -3,13 +3,14 @@
       fixed
       permanent
       right
-      width="30%"
+      light
+      color="#FFFFFF"
+      width="32.5%"
     >
       <v-list dense>
         <v-list-item
           v-for="item in items"
           :key="item.title"
-          @click="something"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
