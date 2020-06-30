@@ -1,7 +1,10 @@
 <template>
     <div class="main">
         <PostWriter />
-        <div>Read some posts</div>
+        <Post />
+        <Post />
+        <Post />
+        <Post />
     </div>
 </template>
 
@@ -9,9 +12,10 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import PostWriter from './PostWriter.vue';
+import Post from './Post.vue';
 
 @Component({
-    components: {PostWriter}
+    components: {PostWriter, Post}
 })
 export default class CenterPanel extends Vue {
 

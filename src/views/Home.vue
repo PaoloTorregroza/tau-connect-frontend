@@ -31,8 +31,8 @@ export default class Home extends Vue {
 
 <style scoped>
 .main-container {
-    width: 45%;
-    margin-left: 22.5%;
+    width: 50%;
+    margin-left: 20%;
     margin-right: 32.5%;
 }
 </style>

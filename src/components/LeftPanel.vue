@@ -6,22 +6,23 @@
       left
       light
       color="#FFFFFF"
-      width="22.5%"
+      width="20%"
     >
-      <v-list dense>
+      <v-list>
         <v-list-item>
-            <img class="logo" src="../assets/tauLogo.png" alt="Logo">
+            <img class="icon" src="../assets/tauLogo.png" alt="Logo">
         </v-list-item>
         <v-list-item
+          class="list-item-container"
           v-for="item in items"
           :key="item.title"
         >
-          <v-list-item-icon>
+          <v-list-item-icon style="margin-right: 13px;">
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title class="list-item">{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -61,7 +62,20 @@ export default class LeftPanel extends Vue {
     padding: 25px;
 }
 
-.logo {
-    width: 24px;
+.icon {
+    width: 30px;
+    margin-left: -3px;
+}
+
+.list-item-container:hover {
+    cursor: pointer;
+    background-color: #ffc284;
+    border-radius: 25px;
+    color: white;
+}
+
+.list-item {
+    font-size: 21px;
+    font-weight: bold;
 }
 </style>

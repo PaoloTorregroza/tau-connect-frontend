@@ -1,43 +1,53 @@
 <template>
-    <v-navigation-drawer
-      fixed
-      permanent
-      right
-      light
-      color="#FFFFFF"
-      width="32.5%"
-    >
-      <v-list dense>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+  <v-navigation-drawer 
+    fixed 
+    right 
+    permanent 
+    light 
+    color="#FFFFFF" 
+    class="right-panel" 
+    width="30%"
+  >
+    <v-card color="#ffc284" light>
+      <v-card-title>Who to follow</v-card-title>
+      <v-divider></v-divider>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+      <FollowUser />
+      <FollowUser />
+      <FollowUser />
+      <FollowUser />
+
+    </v-card>
+
+    <template v-slot:append>
+        <div class="footer">
+            <p>Made whit love by Paolinsky</p>
+        </div>
+    </template>
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import Vue from "vue";
+import Component from "vue-class-component";
+import FollowUser from "./FollowUser.vue";
 
-@Component
+@Component({
+    components: {FollowUser}
+})
 export default class RightPanel extends Vue {
-    items = [
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'My Account', icon: 'mdi-account' },
-          { title: 'Users', icon: 'mdi-account-group-outline' },
-        ]
+
 }
 </script>
 
 <style scoped>
+.right-panel {
+  padding: 1%;
+}
 
+.footer {
+    text-align: center;
+    color: gray;
+    font-weight: 300;
+}
 </style>
