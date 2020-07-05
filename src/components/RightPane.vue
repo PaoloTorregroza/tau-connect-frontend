@@ -8,7 +8,7 @@
     class="right-panel" 
     width="30%"
   >
-    <v-card color="#ffc284" light>
+    <v-card color="#ffefe0" light>
       <v-card-title>Who to follow</v-card-title>
       <v-divider></v-divider>
 

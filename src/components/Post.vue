@@ -2,18 +2,18 @@
     <v-card class="post-container">
         <div>
         <v-avatar class="avatar">
-            <img src="https://randomuser.me/api/portraits/men/9.jpg" />
+            <img :src="gravatar" />
         </v-avatar>
         </div>
         <div class="post-content">
             <v-list>
                 <v-list-item-content>
-                    <v-list-item-title style="font-weight: bold;">Treelon Musk</v-list-item-title>
-                    <v-list-item-subtitle style="margin-top: 5px; color: gray;">@Tree_lover</v-list-item-subtitle>
+                    <v-list-item-title style="font-weight: bold;">{{name}}</v-list-item-title>
+                    <v-list-item-subtitle style="margin-top: 5px; color: gray;">@{{username}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-content>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores esse, nemo omnis natus aspernatur consectetur sint ea perspiciatis quisquam maiores nisi sit nostrum? Velit deleniti alias, quos at autem iste!
-                </v-list-item-content>
+					{{ body }}
+				</v-list-item-content>
             </v-list>
         </div>
         <div class="actions">
@@ -29,13 +29,24 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import md5 from 'md5';
 
 @Component 
 export default class Post extends Vue {
+	@Prop(String) readonly body!: string;
+	@Prop({default: " "}) readonly email!: string;
+	@Prop({default: "John Doe"}) readonly name!: string;
+	@Prop({default: "Undefined"}) readonly username!: string;
+
     items = [
         {name: "like", icon: "mdi-heart-outline"},
         {name: "comment", icon: "mdi-comment-outline"}
     ]
+
+	get gravatar() {
+		return "https://www.gravatar.com/avatar/" + md5(this.email.toLowerCase().trim());
+	}
 }
 </script>
 
