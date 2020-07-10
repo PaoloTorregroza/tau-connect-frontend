@@ -6,6 +6,7 @@
                 <v-card-text>
 					<v-card-text class="error" v-if="invalidData">Invalid data, Email already used.</v-card-text>
                     <v-text-field color="#DB842E" v-model="form.fields.name" label="Name" :rules="form.rules.name" />
+                    <v-text-field color="#DB842E" v-model="form.fields.username" label="Username" :rules="form.rules.username"/>
                     <v-text-field color="#DB842E" type="email" v-model="form.fields.email" label="Email" :rules="form.rules.email" />
                     <v-text-field color="#DB842E" type="password" v-model="form.fields.password" label="Password" :rules="form.rules.password" />
                 </v-card-text>
@@ -21,18 +22,20 @@
 
 <script lang="ts">
     import {Vue, Component } from 'vue-property-decorator';
-    import {requiredRule, emailRule} from '../utils/form-rules';
+    import {requiredRule, usernameRule, emailRule} from '../utils/form-rules';
 	import axios from "axios";
 
 	interface Form extends FormDefinition {
         valid: boolean;
         fields: {
             name: string;
+            username: string;
             email: string;
             password: string;
         };
         rules: {
             name: ((message?: string) => {})[];
+            username: ((message?: string) => {})[];
             email: ((message?: string) => {})[];
             password: ((message?: string) => {})[];
         };
@@ -43,6 +46,7 @@
             valid: false,
             fields: {
                 email: "",
+                username: "",
                 name: "",
                 password: ""
             },
@@ -50,6 +54,10 @@
                 email: [
                     requiredRule(),
                     emailRule()
+                ],
+                username: [
+                    requiredRule(),
+                    usernameRule()
                 ],
                 name: [
                     requiredRule()
@@ -65,6 +73,7 @@
         async onSubmit() {
             const queryData = {
                 email: this.form.fields.email,
+                username: this.form.fields.username,
                 password: this.form.fields.password,
                 name: this.form.fields.name
             }

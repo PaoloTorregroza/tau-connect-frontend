@@ -9,7 +9,7 @@
             <v-list>
                 <v-list-item-content>
                     <v-list-item-title style="font-weight: bold;">{{name}}</v-list-item-title>
-                    <v-list-item-subtitle style="margin-top: 5px; color: gray;">@{{username}}</v-list-item-subtitle>
+                    <v-list-item-subtitle style="margin-top: 5px; color: gray;">{{username}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-content>
 					{{ body }}

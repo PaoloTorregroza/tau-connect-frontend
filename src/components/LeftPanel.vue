@@ -8,7 +8,7 @@
       color="#FFFFFF"
       width="20%"
     >
-      <v-list v-if="logged">
+      <v-list v-if="$store.state.logged">
         <v-list-item>
             <img class="icon" src="../assets/tauLogo.png" alt="Logo">
         </v-list-item>
@@ -69,16 +69,16 @@
         </router-link>
       </v-list>
 
-      <template v-slot:append>
+      <template v-if="$store.state.logged" v-slot:append>
         <v-divider></v-divider>
         <v-list-item two-line>
           <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/women/81.jpg">
+            <img :src="gravatar">
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Jane Smith</v-list-item-title>
-            <v-list-item-subtitle>@Jane</v-list-item-subtitle>
+            <v-list-item-title>{{ $store.state.userData.name }}</v-list-item-title>
+            <v-list-item-subtitle>{{ $store.state.userData.username }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -89,14 +89,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import md5 from 'md5';
 
 @Component
 export default class LeftPanel extends Vue {
-  logged = localStorage.getItem('token')? true : false;
-
   items = [
     { title: 'Home', icon: 'mdi-home-variant', to: "/" },
-    { title: 'User', icon: 'mdi-account-outline', to: "/" },
+    { title: 'User', icon: 'mdi-account-outline', to: "/user" },
     { title: 'Search', icon: 'mdi-magnify', to: "/" },
   ]
 
@@ -106,9 +105,13 @@ export default class LeftPanel extends Vue {
     { title: 'Register', icon: 'mdi-arrow-right', to: "/register" },
   ]
 
-	Logout() {
+  get gravatar() {
+    return "https://www.gravatar.com/avatar/" + md5(this.$store.state.userData.email.toLowerCase().trim());
+  }
+
+	async Logout() {
 		localStorage.removeItem('token');
-		window.location.href = "/";
+    this.$store.commit("logout");
 	}
 }
 </script>

@@ -60,12 +60,15 @@
             }
             try {
 				const response = await axios.post("http://localhost:3000/auth/login", queryData);
-                localStorage.setItem('token', response.data)
-				window.location.href = "/";
+                localStorage.setItem('token', response.data.token);
+                this.$store.commit("loggin", response.data.data);
+				await this.$router.push("/");
 			} catch (e) {
                 this.invalidData = true;
             }
         }
+
+
     }
 </script>
 

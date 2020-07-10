@@ -1,14 +1,14 @@
 <template>
     <div class="main">
 		<div>
-			<PostWriter v-if="logged" />
+			<PostWriter v-if="$store.state.logged" v-on:update-posts="getPosts"/>
 			<Post 
 				v-for="post in posts" 
 				:key="post.id"
-				:name="post.name"
-				:userName="post.username"
+				:name="post.user.name"
+				:username="post.user.username"
 				:body="post.body" 
-				:email="post.email"
+				:email="post.user.email"
 			/>
 		</div>
 	</div>
@@ -25,17 +25,16 @@ import axios from 'axios';
     components: {PostWriter, Post}
 })
 export default class CenterPanel extends Vue {
-	logged = localStorage.getItem("token")? true : false;
 	posts = [];
 	
-
 	created() {
 		this.getPosts();
 	}
 
 	async getPosts() {
 		const response = await axios.get("http://localhost:3000/posts/");
-		this.posts = response.data
+		this.posts = response.data.data;
+		this.posts = this.posts.reverse();
 	}
 }
 </script>
