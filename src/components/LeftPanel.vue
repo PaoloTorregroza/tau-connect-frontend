@@ -12,61 +12,67 @@
         <v-list-item>
             <img class="icon" src="../assets/tauLogo.png" alt="Logo">
         </v-list-item>
-        <router-link
-                v-for="item in items"
-                style="text-decoration: none; color: #1a1a1a;"
-                :to="item.to"
-                :key="item.title"
-        >
-          <v-list-item
-            class="list-item-container"
+        <v-card id="router-container" color="#ffefe0">
+          <router-link
+                  v-for="item in items"
+                  style="text-decoration: none; color: #1a1a1a;"
+                  :to="item.to"
+                  :key="item.title"
           >
+            <v-list-item
+              class="list-item-container"
+            >
+              <v-list-item-icon style="margin-right: 13px;">
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title class="list-item">
+                    {{ item.title }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider />
+          </router-link>
+          <v-list-item class="list-item-container" @click="Logout">
             <v-list-item-icon style="margin-right: 13px;">
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="list-item">
-                  {{ item.title }}
-              </v-list-item-title>
+              <v-list-item-title class="list-item">Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </router-link>
-		<v-list-item class="list-item-container" @click="Logout">
-			<v-list-item-icon style="margin-right: 13px;">
-				<v-icon>mdi-logout</v-icon>
-			</v-list-item-icon>
-
-			<v-list-item-content>
-				<v-list-item-title class="list-item">Logout</v-list-item-title>
-			</v-list-item-content>
-		</v-list-item>
+        </v-card>
 		</v-list>
 
       <v-list v-else>
         <v-list-item>
           <img class="icon" src="../assets/tauLogo.png" alt="Logo">
         </v-list-item>
-        <router-link
-                v-for="item in itemsNotLogged"
-                style="text-decoration: none; color: #1a1a1a;"
-                :to="item.to"
-                :key="item.title"
-        >
-          <v-list-item
-                  class="list-item-container"
+        <v-card id="router-container" color="#ffefe0">
+          <router-link
+                  v-for="item in itemsNotLogged"
+                  style="text-decoration: none; color: #1a1a1a;"
+                  :to="item.to"
+                  :key="item.title"
           >
-            <v-list-item-icon style="margin-right: 13px;">
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+            <v-list-item
+                    class="list-item-container"
+            >
+              <v-list-item-icon style="margin-right: 13px;">
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title class="list-item">
-                {{ item.title }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
+              <v-list-item-content>
+                <v-list-item-title class="list-item">
+                  {{ item.title }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider v-if="item.title != 'Register'" />
+          </router-link>
+        </v-card>
       </v-list>
 
       <template v-if="$store.state.logged" v-slot:append>
@@ -122,14 +128,17 @@ export default class LeftPanel extends Vue {
 }
 
 .icon {
-    width: 30px;
-    margin-left: -3px;
+  width: 30px;
+  margin-left: -3px;
+}
+
+#router-container {
+  padding: 5px;
 }
 
 .list-item-container:hover {
     cursor: pointer;
-    background-color: #ffc284;
-    border-radius: 25px;
+    background-color: #ffdebd;
     color: white;
 }
 

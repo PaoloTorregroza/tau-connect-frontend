@@ -5,6 +5,7 @@
 			<Post 
 				v-for="post in posts" 
 				:key="post.id"
+				:postid="post.id"
 				:name="post.user.name"
 				:username="post.user.username"
 				:body="post.body" 
