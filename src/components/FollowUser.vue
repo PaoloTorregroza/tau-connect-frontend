@@ -2,12 +2,12 @@
     <div>
     <v-list-item two-line>
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+          <img :src="gravatar" />
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Sam Smith</v-list-item-title>
-          <v-list-item-subtitle>@Sammy</v-list-item-subtitle>
+          <v-list-item-title>{{name}}</v-list-item-title>
+          <v-list-item-subtitle>{{username}}</v-list-item-subtitle>
         </v-list-item-content>
 
         <v-list-item-icon>
@@ -21,10 +21,19 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import md5 from 'md5';
 
 @Component
 export default class FollowUser extends Vue {
+  @Prop(String) readonly userid: string;
+  @Prop(String) readonly username: string;
+  @Prop(String) readonly name: string;
+  @Prop(String) readonly email: string;
 
+  get gravatar() {
+    return "https://www.gravatar.com/avatar/" + md5(this.email.toLowerCase().trim());
+  }
 }
 </script>
 

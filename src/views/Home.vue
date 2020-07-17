@@ -13,7 +13,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import LeftPanel from '../components/LeftPanel.vue';
-import RightPanel from '../components/RightPane.vue';
+import RightPanel from '../components/RightPanel.vue';
 import CenterPanel from '../components/CenterPanel.vue';
 
 @Component({

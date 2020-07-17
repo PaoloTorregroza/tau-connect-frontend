@@ -41,6 +41,7 @@ export default class Post extends Vue {
 	@Prop({default: " "}) readonly email: string;
 	@Prop({default: "John Doe"}) readonly name: string;
 	@Prop({default: "Undefined"}) readonly username: string;
+	@Prop(String) readonly userid: string;
 	@Prop(String) readonly postid: string; 
 	
 	liked = false;
@@ -61,6 +62,7 @@ export default class Post extends Vue {
 	// Hooks
 	created() {	
 		this.getPostLikes();
+		this.isLiked();
 	}
 
 	// Methods
@@ -68,6 +70,11 @@ export default class Post extends Vue {
 	async getPostLikes() {
 		const likesData = await axios.get(`http://localhost:3000/likes/post/${this.postid}`)
 		this.likes = likesData.data.data;
+	}
+
+	async isLiked() {
+		const response = await axios.get(`http://localhost:3000/likes/post/${this.postid}/${this.$store.state.userData.id}`);
+		this.liked = response.data.data;
 	}
 	
 	async like() {

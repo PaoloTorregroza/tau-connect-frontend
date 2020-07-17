@@ -12,10 +12,14 @@
       <v-card-title>Who to follow</v-card-title>
       <v-divider></v-divider>
 
-      <FollowUser />
-      <FollowUser />
-      <FollowUser />
-      <FollowUser />
+      <FollowUser 
+        v-for="user in users" 
+        v-bind:key="user.id"
+        :name="user.name"
+        :username="user.username"
+        :email="user.email"
+        :userid="user.id"  
+      />
 
     </v-card>
 
@@ -31,12 +35,26 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import FollowUser from "./FollowUser.vue";
+import axios from 'axios';
 
 @Component({
     components: {FollowUser}
+    
 })
 export default class RightPanel extends Vue {
+  users = [];
 
+  // Hooks
+  created() {
+    this.getTopUsers();
+  }
+
+  // Methods
+  async getTopUsers() {
+    const results = await axios.get("http://localhost:3000/users/"); 
+    this.users = results.data.data;
+    console.log(this.users);
+  }
 }
 </script>
 
