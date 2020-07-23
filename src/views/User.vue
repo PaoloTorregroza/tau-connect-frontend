@@ -13,6 +13,7 @@
                 <v-card-subtitle style="margin-top: -25px; color: gray;">{{$store.state.userData.username}}</v-card-subtitle>
             </div>
         </div>
+        <v-card-subtitle>Followers: {{followers}}</v-card-subtitle>
             <v-form>
                 <v-card-text class="error" v-if="changeDataFail">Failed to update</v-card-text>
                 <v-text-field color="#DB842E" v-model="userData.name" :rules="formRules.name" placeholder="Name"></v-text-field>
@@ -42,6 +43,7 @@ export default class User extends Vue {
 
     changePasswordFail = false;
     changeDataFail = false;
+    followers = 0;
 
     formRules = {
         name: [requiredRule()],
@@ -54,6 +56,10 @@ export default class User extends Vue {
         username: this.$store.state.userData.username,
         newPassword: "",
         oldPassword: ""
+    }
+
+    async created() {
+        this.getFollowers();
     }
 
     get gravatar() {
@@ -89,6 +95,11 @@ export default class User extends Vue {
         } catch (e) {
             this.changePasswordFail = true;
         }
+    }
+
+    async getFollowers() {
+        const results = await axios.get(`http://localhost:3000/users/followers/${this.$store.state.userData.id}`);
+        this.followers = results.data.data.length;
     }
 }
 </script>

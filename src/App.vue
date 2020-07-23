@@ -7,6 +7,8 @@
 <script lang="ts">
   import Vue from 'vue';
   import Component from 'vue-class-component';
+  import infiniteScroll from 'vue-infinite-scroll';
+  Vue.use(infiniteScroll);
 
   @Component
   export default class App extends Vue {

@@ -53,7 +53,6 @@ export default class RightPanel extends Vue {
   async getTopUsers() {
     const results = await axios.get("http://localhost:3000/users/"); 
     this.users = results.data.data;
-    console.log(this.users);
   }
 }
 </script>

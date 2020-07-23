@@ -11,7 +11,20 @@
         </v-list-item-content>
 
         <v-list-item-icon>
-            <v-btn outlined color="#7B0001" class="follow-btn">Follow</v-btn>
+            <v-btn 
+              v-if="!followed"
+              outlined 
+              color="#7B0001" 
+              class="follow-btn" 
+              @click="follow"
+            >Follow</v-btn>
+            <v-btn 
+              v-else
+              dark
+              color="#7B0001" 
+              class="follow-btn" 
+              @click="follow"
+            >{{followersData.length}}</v-btn>
         </v-list-item-icon>
       </v-list-item>
     <v-divider />
@@ -22,6 +35,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import axios from 'axios';
 import md5 from 'md5';
 
 @Component
@@ -31,8 +45,42 @@ export default class FollowUser extends Vue {
   @Prop(String) readonly name: string;
   @Prop(String) readonly email: string;
 
+  followed = false;
+  followersData: User[] = [];
+
+  created() {
+    this.getFollowers();
+  }
+
   get gravatar() {
     return "https://www.gravatar.com/avatar/" + md5(this.email.toLowerCase().trim());
+  }
+
+  async follow() {
+    this.followed = !this.followed;
+    const config = {
+      headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+    }
+    const body = {
+      userId: this.userid
+    }
+    await axios.put("http://localhost:3000/users/follow", body, config);
+    this.getFollowers();
+  }
+
+  async getFollowers() {
+    const results = await axios.get(`http://localhost:3000/users/followers/${this.userid}`);
+    this.followersData = results.data.data;
+    this.checkIfFollowed();
+  }
+
+  checkIfFollowed() {
+    for (let i = 0; i < this.followersData.length; i++){
+      if (this.$store.state.userData.id == this.followersData[i].id) {
+        this.followed = true;
+        break;
+      }
+    }
   }
 }
 </script>

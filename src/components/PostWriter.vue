@@ -33,7 +33,8 @@ export default class PostWriter extends Vue {
     postBody = "";
     validPost = false;
 
-    rules = [(v: string) => /\w+/.test(v) || "Write something", 
+    rules = [
+        (v: string) => /\w+/.test(v) || "Write something", 
         (v: string) => v?.length <= 310 || "Max 310 characters", 
         requiredRule()
     ];
