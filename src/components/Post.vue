@@ -23,7 +23,7 @@
 		</div>
 		<div class="actions-info">
 			<p>{{ likes.length }}</p>
-			<p>{{ comments.length }}</p>
+			<p>{{ post.comments.length }}</p>
 		</div>
 	</v-card>
 </template>
@@ -41,7 +41,6 @@ export default class Post extends Vue {
 
 	liked = false;
 	likes: JSON[] = [];
-	comments: TComment[] = [];
 
 	icons = {
 		like: {icon: "mdi-heart-outline"},
@@ -80,16 +79,16 @@ export default class Post extends Vue {
 		}
 
 		await axios.put(`http://localhost:3000/posts/like/${this.post.id}`, {}, config);
-		this.getPostLikes();
+		await this.getPostLikes();
 	}
 
 	async goToPost(forComment = false) {
 		await this.$router.push("/post/"+this.post.id + "/" + forComment);
 	}
 
-  comment() {
-		this.$emit("comment", this.post.id);
-  }
+    comment() {
+        this.$emit("comment", this.post.id);
+    }
 }
 </script>
 

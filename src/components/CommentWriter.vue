@@ -29,7 +29,7 @@
             <v-btn
               color="#7B0001"
               text
-              @click="show = false"
+              @click="$emit('update:show', false)"
             >
               Cancel
             </v-btn>
@@ -46,11 +46,13 @@
   import Vue from 'vue';
   import Component from 'vue-class-component';
   import { Prop } from 'vue-property-decorator';
-  import {requiredRule} from '../utils/form-rules';
+  import {requiredRule} from '@/utils/form-rules';
+  import axios from 'axios';
 
   @Component
   export default class CommentWriter extends Vue {
     @Prop() show: boolean;
+    @Prop() readonly postId: string;
 
     validPost = false;
     commentBody = "";
@@ -60,8 +62,15 @@
         requiredRule()
     ];
 
-    comment() {
+    async comment() {
       this.$emit("update:show", false);
+      const url = "http://localhost:3000/comments/" + this.postId;
+      const config = {
+        headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+      }
+      await axios.post(url, {body: this.commentBody}, config);
+      this.$emit("commented");
+      this.commentBody = "";
     }
   }
 

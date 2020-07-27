@@ -50,7 +50,7 @@ export default class CenterPanel extends Vue {
 			
 			let append: TPost[] = [] 
 			const response = await axios.get("http://localhost:3000/posts/");
-			append = response.data.data.reverse();
+			append = response.data.data;
 			append = append.slice(this.posts.length, this.posts.length + this.limit);
 			this.posts = this.posts.concat(append);
 			this.busy = false;
@@ -62,8 +62,9 @@ export default class CenterPanel extends Vue {
 	// When a new post is made we need to add it to the start of the array
 	async newPostUpdate() {
 		const response = await axios.get("http://localhost:3000/posts/");
-		const data = response.data.data.reverse();
-		this.posts.unshift(data[0])
+		let data = response.data.data;
+		data = data.slice(0, this.posts.length + this.limit);
+		this.posts = data;
 	}
 
 	async goToSingleView(value: string) {

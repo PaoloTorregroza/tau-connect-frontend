@@ -5,16 +5,35 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import Component from 'vue-class-component';
-  import infiniteScroll from 'vue-infinite-scroll';
-  Vue.use(infiniteScroll);
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import infiniteScroll from 'vue-infinite-scroll';
+import axios from 'axios';
+Vue.use(infiniteScroll);
 
-  @Component
-  export default class App extends Vue {
-		
+@Component
+export default class App extends Vue {
+
+  async created() {
+    await this.checkToken();
   }
+
+  async checkToken() {
+    const config = {
+      headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+    }
+    const response = await axios.get("http://localhost:3000/users/"+this.$store.state.userData.id,
+      config
+    );
+
+    if (response.status == 401) {
+      localStorage.clear();
+      this.$store.commit("logout");
+      await this.$router.push("/login");
+    }
+  }
+}
 </script>
 
-<style>
+<style scoped>
 </style>

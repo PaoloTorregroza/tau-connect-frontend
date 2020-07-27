@@ -1,7 +1,9 @@
 <template>
   <div>
     <CommentWriter
-      :show.sync="showComment" 
+      :show.sync="showComment"
+      :post-id="post.id"
+      @commented="getPost"
     />
     <router-link id="back" to="/">
         <v-icon style="color: #1a1a1a;">mdi-arrow-left</v-icon>
@@ -49,17 +51,20 @@
       
       this.checkIfForComment();
 
-      const url = "http://localhost:3000/posts/" + this.$route.params.id
-      const results = await axios.get(url);
-      this.post = results.data.data;
-      if (this.post.comments) this.comments = this.post.comments;
+      await this.getPost();
     }
 
     checkIfForComment() {
-      if (this.$route.params.forComment === "true") {
-        this.showComment = true;
-      } else {
-        this.showComment = false;
+      this.showComment = this.$route.params.forComment === "true";
+    }
+
+    async getPost() {
+      const url = "http://localhost:3000/posts/" + this.$route.params.id
+      const results = await axios.get(url);
+      this.post = results.data.data;
+
+      if (this.post.comments) {
+        this.comments = this.post.comments.reverse();
       }
     }
   }
