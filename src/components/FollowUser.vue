@@ -46,7 +46,7 @@ export default class FollowUser extends Vue {
   @Prop(String) readonly email: string;
 
   followed = false;
-  followersData: User[] = [];
+  followersData: TUser[] = [];
 
   created() {
     this.getFollowers();

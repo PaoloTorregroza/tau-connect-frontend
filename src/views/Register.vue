@@ -1,5 +1,8 @@
 <template>
     <v-main>
+        <router-link id="back" to="/">
+            <v-icon style="color: #1a1a1a;">mdi-arrow-left</v-icon>
+        </router-link>
         <v-card id="login-card">
             <v-card-title>Register</v-card-title>
             <v-form ref="form" v-model="form.valid" @submit.prevent="onSubmit">
@@ -88,6 +91,12 @@
 </script>
 
 <style>
+    #back {
+        margin: 25px 0 0 25px;
+        text-decoration: none;
+        position: absolute;
+    }
+
     #login-card {
         padding: 1% 4.5%;
         margin: 20px 30% 5% 30%;

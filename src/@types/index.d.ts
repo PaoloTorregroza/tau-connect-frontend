@@ -10,7 +10,7 @@ interface FormDefinition {
     };
 }
 
-interface User {
+type TUser = {
     id: string;
     name: string;
     username: string;
@@ -18,8 +18,16 @@ interface User {
     activated: boolean;
 }
 
-interface IPost {
+type TPost = {
     id: string;
     body: string;
-    user: User;
+    user: TUser;
+    comments?: TComment[];
+}
+
+type TComment = {
+    id: string;
+    body: string;
+    created_at: string;
+    user: TUser;
 }

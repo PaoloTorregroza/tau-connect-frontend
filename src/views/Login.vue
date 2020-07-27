@@ -1,19 +1,24 @@
 <template>
-    <v-card id="login-card">
-        <v-card-title>Login</v-card-title>
-        <v-form ref="form" v-model="form.valid" @submit.prevent="onSubmit">
-            <v-card-text>
-                <v-card-text class="error" v-if="invalidData">Invalid email or password</v-card-text>
-                <v-text-field color="#DB842E" type="email" v-model="form.fields.email" label="Email" :rules="form.rules.email" />
-                <v-text-field color="#DB842E" type="password" v-model="form.fields.password" label="Password" :rules="form.rules.password" />
-            </v-card-text>
-            <v-card-actions>
-                <v-btn style="color: white" type="submit" color="#7B0001" :disabled="!form.valid">
-                    Continue
-                </v-btn>
-            </v-card-actions>
-        </v-form>
-    </v-card>
+    <div>
+        <router-link id="back" to="/">
+            <v-icon style="color: #1a1a1a;">mdi-arrow-left</v-icon>
+        </router-link>
+        <v-card id="login-card">
+            <v-card-title>Login</v-card-title>
+            <v-form ref="form" v-model="form.valid" @submit.prevent="onSubmit">
+                <v-card-text>
+                    <v-card-text class="error" v-if="invalidData">Invalid email or password</v-card-text>
+                    <v-text-field color="#DB842E" type="email" v-model="form.fields.email" label="Email" :rules="form.rules.email" />
+                    <v-text-field color="#DB842E" type="password" v-model="form.fields.password" label="Password" :rules="form.rules.password" />
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn style="color: white" type="submit" color="#7B0001" :disabled="!form.valid">
+                        Continue
+                    </v-btn>
+                </v-card-actions>
+            </v-form>
+        </v-card>
+    </div>
 </template>
 
 <script lang="ts">
@@ -73,6 +78,12 @@
 </script>
 
 <style scoped>
+    #back {
+        margin: 25px 0 0 25px;
+        text-decoration: none;
+        position: absolute;
+    }
+
     #login-card {
         padding: 1% 4.5%;
         margin: 20px 30% 5% 30%;

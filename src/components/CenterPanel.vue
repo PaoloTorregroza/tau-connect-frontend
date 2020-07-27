@@ -8,15 +8,10 @@
 				infinite-scroll-distance="limit"	
 			>
 				<Post 
-					v-for="post in posts" 
+					@comment="goToSingleView"
+					v-for="post in posts"
 					:key="post.id"
-					:postid="post.id"
-					:userid="post.user.id"
-					:name="post.user.name"
-					:username="post.user.username"
-					:body="post.body" 
-					:email="post.user.email"
-
+					:post="post"
 					data-aos="slide-up"
 					data-aos-offset="100" 
 					data-aos-easing="ease-out-back"
@@ -39,7 +34,8 @@ import 'aos/dist/aos.css';
     components: {PostWriter, Post}
 })
 export default class CenterPanel extends Vue {
-	posts: IPost[] = [];
+	posts: TPost[] = [];
+	final = false;
 	busy = false;
 	limit = 5;
 	
@@ -49,14 +45,18 @@ export default class CenterPanel extends Vue {
 	}
 
 	async loadMore() {
-		this.busy = true;
-		
-		let append: IPost[] = [] 
-		const response = await axios.get("http://localhost:3000/posts/");
-		append = response.data.data.reverse();
-		append = append.slice(this.posts.length, this.posts.length + this.limit);
-		this.posts = this.posts.concat(append);
-		this.busy = false;
+		if (!this.final) {
+			this.busy = true;
+			
+			let append: TPost[] = [] 
+			const response = await axios.get("http://localhost:3000/posts/");
+			append = response.data.data.reverse();
+			append = append.slice(this.posts.length, this.posts.length + this.limit);
+			this.posts = this.posts.concat(append);
+			this.busy = false;
+			if (this.posts.length == response.data.data.length) this.final = true; 
+		}
+
 	}
 
 	// When a new post is made we need to add it to the start of the array
@@ -64,6 +64,11 @@ export default class CenterPanel extends Vue {
 		const response = await axios.get("http://localhost:3000/posts/");
 		const data = response.data.data.reverse();
 		this.posts.unshift(data[0])
+	}
+
+	async goToSingleView(value: string) {
+		const postId = value;
+		await this.$router.push("/post/"+ postId + "/true");
 	}
 }
 </script>

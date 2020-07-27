@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import SinglePost from "../views/SinglePost.vue";
 import User from '../views/User.vue';
 
 Vue.use(VueRouter)
@@ -27,6 +28,11 @@ Vue.use(VueRouter)
     path: "/user",
     name: "User",
     component: User
+  },
+  {
+    path: "/post/:id/:forComment",
+    name: "Post",
+    component: SinglePost
   }
 ]
 
