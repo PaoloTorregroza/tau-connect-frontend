@@ -47,7 +47,7 @@ export default class PostWriter extends Vue {
         const config = {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         };
-        const result = await axios.post("http://localhost:3000/posts", {body: this.postBody}, config);
+        await axios.post("http://localhost:3000/posts", {body: this.postBody}, config);
         this.postBody = "";
         this.$emit("update-posts");
     }

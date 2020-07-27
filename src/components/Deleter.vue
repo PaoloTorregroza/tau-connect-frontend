@@ -1,6 +1,9 @@
 <template>
     <div @click="$emit('deleteEvent')" class="deleter">
+        <!--
         <v-icon color="#7B0001">{{ icon }}</v-icon>
+        -->
+        <p>x</p>
     </div>
 </template>
 
@@ -16,11 +19,12 @@
 
 <style scoped>
     .deleter {
+        color: gray;
+        font-size: small;
+        font-weight: lighter;
         position: absolute;
-        bottom: 0;
-        right: 0;
-        padding: 5px;
-        margin: 0 15px 2px 0;
+        top: 0;
+        right: 8px;
     }
 
     .deleter:hover {
