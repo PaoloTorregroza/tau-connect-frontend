@@ -1,9 +1,13 @@
 <template>
     <v-card class="post-container">
+        <Deleter
+                v-if="post.user.id === $store.state.userData.id"
+                @deleteEvent="deletePost"
+        />
         <div>
-					<v-avatar class="avatar">
-							<img :src="gravatar" />
-					</v-avatar>
+            <v-avatar class="avatar">
+                    <img :src="gravatar" />
+            </v-avatar>
         </div>
         <div class="post-content" @click="goToPost(false)">
             <v-list>
@@ -32,10 +36,13 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import Deleter from "@/components/Deleter.vue";
 import md5 from 'md5';
 import axios from 'axios';
 
-@Component
+@Component(
+    {components: { Deleter } }
+)
 export default class Post extends Vue {
 	@Prop() readonly post: TPost;
 
@@ -88,6 +95,14 @@ export default class Post extends Vue {
 
     comment() {
         this.$emit("comment", this.post.id);
+    }
+
+    async deletePost() {
+        const config = {
+            headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+        }
+        await axios.delete("http://localhost:3000/posts/"+this.post.id, config);
+        this.$emit("postDeleted");
     }
 }
 </script>

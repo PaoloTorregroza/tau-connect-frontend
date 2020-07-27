@@ -1,7 +1,7 @@
 <template>
     <div class="main">
 		<div>
-			<PostWriter v-if="$store.state.logged" v-on:update-posts="newPostUpdate"/>
+			<PostWriter v-if="$store.state.logged" v-on:update-posts="updater"/>
 			<div
 				v-infinite-scroll="loadMore" 
 				infinite-scroll-disabled="busy"
@@ -12,6 +12,7 @@
 					v-for="post in posts"
 					:key="post.id"
 					:post="post"
+					@postDeleted="updater"
 					data-aos="slide-up"
 					data-aos-offset="100" 
 					data-aos-easing="ease-out-back"
@@ -60,7 +61,7 @@ export default class CenterPanel extends Vue {
 	}
 
 	// When a new post is made we need to add it to the start of the array
-	async newPostUpdate() {
+	async updater() {
 		const response = await axios.get("http://localhost:3000/posts/");
 		let data = response.data.data;
 		data = data.slice(0, this.posts.length + this.limit);

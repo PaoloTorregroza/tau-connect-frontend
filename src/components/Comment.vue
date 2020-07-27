@@ -1,5 +1,9 @@
 <template>
-  <v-card class="comment-container">
+    <v-card class="comment-container">
+        <Deleter
+            v-if="comment.user.id === $store.state.userData.id"
+            @deleteEvent="deleteComment"
+        />
         <div>
         <v-avatar class="avatar">
             <img :src="gravatar" />
@@ -12,28 +16,31 @@
                     <v-list-item-subtitle style="margin-top: 5px; color: gray;">{{comment.user.username}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-content>
-					{{ comment.body }}
-				</v-list-item-content>
+                    {{ comment.body }}
+                </v-list-item-content>
             </v-list>
         </div>
         <div class="actions">
             <v-icon class="action-icon" v-if="!liked" @click="like">{{ icons.like.icon }}</v-icon>
-			<v-icon class="action-icon" v-else color="#7B0001" @click="like">{{ icons.liked.icon }}</v-icon>
-		</div>
-		<div class="actions-info">
-			<p>{{ likes.length }}</p>
-		</div>
-	</v-card>
+            <v-icon class="action-icon" v-else color="#7B0001" @click="like">{{ icons.liked.icon }}</v-icon>
+        </div>
+        <div class="actions-info">
+            <p>{{ likes.length }}</p>
+        </div>
+</v-card>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component';
+  import Deleter from "@/components/Deleter.vue";
   import { Prop } from 'vue-property-decorator';
   import md5 from 'md5';
   import axios from 'axios';
 
-  @Component
+  @Component(
+      { components: { Deleter } }
+  )
   export default class Comment extends Vue {
     @Prop() comment: TComment;
 
@@ -75,6 +82,14 @@
     async getPostLikes() {
       const likesData = await axios.get(`http://localhost:3000/likes/comment/${this.comment.id}`);
       this.likes = likesData.data.data;
+    }
+
+    async deleteComment() {
+        const config = {
+            headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+        }
+        await axios.delete("http://localhost:3000/comments/"+this.comment.id, config);
+        this.$emit("commentDeleted");
     }
   }
 </script>

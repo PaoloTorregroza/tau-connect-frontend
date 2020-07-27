@@ -9,11 +9,12 @@
         <v-icon style="color: #1a1a1a;">mdi-arrow-left</v-icon>
     </router-link>
     <div v-if="post.id" class="singlePostContainer">
-      <Post @comment="showComment = true" :post="post"/>
+      <Post @postDeleted="$router.push('/')" @comment="showComment = true" :post="post"/>
       <Comment 
         v-for="comment in comments"
         :key="comment.id" 
         :comment="comment"
+        @commentDeleted="getPost"
         data-aos="slide-up"
         data-aos-offset="100" 
         data-aos-easing="ease-out-back"
