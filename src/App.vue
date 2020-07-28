@@ -22,15 +22,17 @@ export default class App extends Vue {
     const config = {
       headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
     }
-    const response = await axios.get("http://localhost:3000/users/"+this.$store.state.userData.id,
-      config
-    );
-
-    if (response.status == 401) {
-      localStorage.clear();
-      this.$store.commit("logout");
-      await this.$router.push("/login");
-    }
+	try{
+		if (this.$store.state.userData.id) {
+			await axios.get("http://localhost:3000/users/"+this.$store.state.userData.id,
+				config
+			);
+		}
+	} catch(e) {
+		localStorage.clear();	
+		this.$store.commit("logout");
+		await this.$router.push("/login");
+	}
   }
 }
 </script>
