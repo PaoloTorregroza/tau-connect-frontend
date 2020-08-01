@@ -81,7 +81,7 @@
                 name: this.form.fields.name
             }
             try {
-				await axios.post("http://localhost:3000/auth/register", queryData);
+				await axios.post(`${this.$apiUrl}/auth/register`, queryData);
 				await this.$router.push("/login");
             } catch (e) {
 				this.invalidData = true;

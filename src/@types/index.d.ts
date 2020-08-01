@@ -16,6 +16,7 @@ type TUser = {
     username: string;
     email: string;
     activated: boolean;
+    followers: TUser[];
 }
 
 type TPost = {
@@ -31,3 +32,5 @@ type TComment = {
     created_at: string;
     user: TUser;
 }
+
+

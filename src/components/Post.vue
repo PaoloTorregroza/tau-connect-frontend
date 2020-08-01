@@ -45,6 +45,7 @@ import axios from 'axios';
 )
 export default class Post extends Vue {
 	@Prop() readonly post: TPost;
+    @Prop() readonly clickable: boolean;
 
 	liked = false;
 	likes: JSON[] = [];
@@ -90,8 +91,10 @@ export default class Post extends Vue {
 	}
 
 	async goToPost(forComment = false) {
-		await this.$router.push("/post/"+this.post.id + "/" + forComment);
-	}
+        if (this.clickable)
+            await this.$router.push("/post/"+this.post.id + "/" + forComment);
+	
+    }
 
     comment() {
         this.$emit("comment", this.post.id);

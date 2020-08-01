@@ -70,7 +70,7 @@ export default class FollowUser extends Vue {
 
   async getFollowers() {
     const results = await axios.get(`http://localhost:3000/users/followers/${this.userid}`);
-    this.followersData = results.data.data;
+    this.followersData = results.data.data.followers;
     this.checkIfFollowed();
   }
 

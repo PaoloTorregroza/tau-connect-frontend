@@ -9,7 +9,7 @@
         <v-icon style="color: #1a1a1a;">mdi-arrow-left</v-icon>
     </router-link>
     <div v-if="post.id" class="singlePostContainer">
-      <Post @postDeleted="$router.push('/')" @comment="showComment = true" :post="post"/>
+      <Post @postDeleted="$router.push('/')" @comment="showComment = true" :clickable="false" :post="post"/>
       <Comment 
         v-for="comment in comments"
         :key="comment.id" 
@@ -49,24 +49,17 @@
 
     async created() {
       AOS.init();
-      
-      this.checkIfForComment();
-
+      this.showComment = this.$route.params.forComment === "true";
       await this.getPost();
     }
 
-    checkIfForComment() {
-      this.showComment = this.$route.params.forComment === "true";
-    }
-
     async getPost() {
-      const url = "http://localhost:3000/posts/" + this.$route.params.id
-      const results = await axios.get(url);
-      this.post = results.data.data;
-
-      if (this.post.comments) {
-        this.comments = this.post.comments.reverse();
-      }
+        const url: string = this.$apiUrl + "/posts/" + this.$route.params.id;
+        const results = await axios.get(url);
+        this.post = results.data.data;
+        if (this.post.comments) {
+            this.comments = this.post.comments.reverse();
+        }
     }
   }
 </script>

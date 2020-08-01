@@ -12,6 +12,7 @@
 					v-for="post in posts"
 					:key="post.id"
 					:post="post"
+                    :clickable="true"
 					@postDeleted="updater"
 					data-aos="slide-up"
 					data-aos-offset="100" 
@@ -50,7 +51,7 @@ export default class CenterPanel extends Vue {
 			this.busy = true;
 			
 			let append: TPost[] = [] 
-			const response = await axios.get("http://localhost:3000/posts/");
+			const response = await axios.get(`${this.$apiUrl}/posts/`);
 			append = response.data.data;
 			append = append.slice(this.posts.length, this.posts.length + this.limit);
 			this.posts = this.posts.concat(append);
@@ -62,7 +63,7 @@ export default class CenterPanel extends Vue {
 
 	// When a new post is made we need to add it to the start of the array
 	async updater() {
-		const response = await axios.get("http://localhost:3000/posts/");
+		const response = await axios.get(`${this.$apiUrl}/posts/`);
 		let data = response.data.data;
 		data = data.slice(0, this.posts.length + this.limit);
 		this.posts = data;

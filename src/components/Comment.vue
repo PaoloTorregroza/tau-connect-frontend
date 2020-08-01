@@ -70,17 +70,17 @@
         headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
       }
       
-      await axios.put(`http://localhost:3000/comments/like/${this.comment.id}`, {}, config);
+      await axios.put(`${this.$apiUrl}/comments/like/${this.comment.id}`, {}, config);
       this.getPostLikes();
     }
 
     async isLiked() {
-      const response = await axios.get(`http://localhost:3000/likes/comment/${this.comment.id}/${this.$store.state.userData.id}`);
+      const response = await axios.get(`${this.$apiUrl}/likes/comment/${this.comment.id}/${this.$store.state.userData.id}`);
       this.liked = response.data.data;
     }
 
     async getPostLikes() {
-      const likesData = await axios.get(`http://localhost:3000/likes/comment/${this.comment.id}`);
+      const likesData = await axios.get(`${this.$apiUrl}/likes/comment/${this.comment.id}`);
       this.likes = likesData.data.data;
     }
 
@@ -88,7 +88,7 @@
         const config = {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }
-        await axios.delete("http://localhost:3000/comments/"+this.comment.id, config);
+        await axios.delete(`${this.$apiUrl}/comments/`+this.comment.id, config);
         this.$emit("commentDeleted");
     }
   }

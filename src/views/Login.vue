@@ -57,6 +57,7 @@
                 ]
             }
         }
+
         invalidData = false;
         async onSubmit() {
             const queryData = {
@@ -64,7 +65,7 @@
                 password: this.form.fields.password
             }
             try {
-				const response = await axios.post("http://localhost:3000/auth/login", queryData);
+				const response = await axios.post(`${this.$apiUrl}/auth/login`, queryData);
                 localStorage.setItem('token', response.data.token);
                 this.$store.commit("loggin", response.data.data);
 				await this.$router.push("/");

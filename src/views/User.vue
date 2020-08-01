@@ -22,6 +22,7 @@
                     update
                 </v-btn>
                 <v-card-text class="error" v-if="changePasswordFail">Invalid data</v-card-text>
+                <v-card-text class="succes" v-if="changePasswordSucces">Password updated!</v-card-text>
                 <v-text-field color="#DB842E" type="password" v-model="userData.newPassword" :rules="formRules.password" placeholder="New password"></v-text-field>
                 <v-text-field color="#DB842E" type="password" v-model="userData.oldPassword" :rules="formRules.password" placeholder="Old password"></v-text-field>
                 <v-btn @click="updatePassword" class="user-form-button" color="#7B0001">
@@ -42,6 +43,7 @@ import {requiredRule, usernameRule} from '../utils/form-rules';
 export default class User extends Vue {
 
     changePasswordFail = false;
+    changePasswordSucces = false;
     changeDataFail = false;
     followers = 0;
 
@@ -75,7 +77,7 @@ export default class User extends Vue {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }
         try {
-            const results = await axios.put(`http://localhost:3000/users/${this.$store.state.userData.id}`, payload, config);
+            const results = await axios.put(`${this.$apiUrl}/users/${this.$store.state.userData.id}`, payload, config);
             this.$store.commit("updateUser", results.data.data);
         } catch (e) {
             this.changeDataFail = true;
@@ -92,6 +94,9 @@ export default class User extends Vue {
         }
         try {
             await axios.put("http://localhost:3000/auth/change-password", payload, config);
+            this.changePasswordSucces = true;
+            this.userData.oldPassword = "";
+            this.userData.newPassword = "";
         } catch (e) {
             this.changePasswordFail = true;
         }
@@ -99,7 +104,7 @@ export default class User extends Vue {
 
     async getFollowers() {
         const results = await axios.get(`http://localhost:3000/users/followers/${this.$store.state.userData.id}`);
-        this.followers = results.data.data.length;
+        this.followers = results.data.data.followers.length;
     }
 }
 </script>
@@ -123,6 +128,14 @@ export default class User extends Vue {
 .error {
     margin-top: 25px;
     background-color: red;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.succes {
+    margin-top: 25px;
+    background-color: #FFEFE0;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 10px;

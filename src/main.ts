@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify';
 import {store} from './store/store';
 
 Vue.config.productionTip = false
+Vue.prototype.$apiUrl = "http://localhost:3000";
 
 new Vue({
   router,

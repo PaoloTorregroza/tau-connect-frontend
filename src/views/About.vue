@@ -1,5 +1,5 @@
 <template>
   <v-container>
-    <h1>This is an about page</h1>
+    <h1>Made with love by Paolinsky UwU </h1>
   </v-container>
 </template>
