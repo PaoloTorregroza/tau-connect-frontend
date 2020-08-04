@@ -71,12 +71,12 @@ export default class Post extends Vue {
 	// Methods
 
 	async getPostLikes() {
-		const likesData = await axios.get(`http://localhost:3000/likes/post/${this.post.id}`);
+		const likesData = await axios.get(`${this.$apiUrl}/likes/post/${this.post.id}`);
 		this.likes = likesData.data.data;
 	}
 
 	async isLiked() {
-		const response = await axios.get(`http://localhost:3000/likes/post/${this.post.id}/${this.$store.state.userData.id}`);
+		const response = await axios.get(`${this.$apiUrl}/likes/post/${this.post.id}/${this.$store.state.userData.id}`);
 		this.liked = response.data.data;
 	}
 
@@ -86,7 +86,7 @@ export default class Post extends Vue {
 			headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
 		}
 
-		await axios.put(`http://localhost:3000/posts/like/${this.post.id}`, {}, config);
+		await axios.put(`${this.$apiUrl}/posts/like/${this.post.id}`, {}, config);
 		await this.getPostLikes();
 	}
 
@@ -104,7 +104,7 @@ export default class Post extends Vue {
         const config = {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }
-        await axios.delete("http://localhost:3000/posts/"+this.post.id, config);
+        await axios.delete(`${this.$apiUrl}/posts/`+this.post.id, config);
         this.$emit("postDeleted");
     }
 }

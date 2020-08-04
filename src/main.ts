@@ -5,7 +5,7 @@ import vuetify from './plugins/vuetify';
 import {store} from './store/store';
 
 Vue.config.productionTip = false
-Vue.prototype.$apiUrl = "http://localhost:3000";
+Vue.prototype.$apiUrl = "https://tau-backend-testing-api.herokuapp.com";
 
 new Vue({
   router,

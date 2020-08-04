@@ -93,7 +93,7 @@ export default class User extends Vue {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }
         try {
-            await axios.put("http://localhost:3000/auth/change-password", payload, config);
+            await axios.put(`${this.$apiUrl}/auth/change-password`, payload, config);
             this.changePasswordSucces = true;
             this.userData.oldPassword = "";
             this.userData.newPassword = "";
@@ -103,7 +103,7 @@ export default class User extends Vue {
     }
 
     async getFollowers() {
-        const results = await axios.get(`http://localhost:3000/users/followers/${this.$store.state.userData.id}`);
+        const results = await axios.get(`${this.$apiUrl}/users/followers/${this.$store.state.userData.id}`);
         this.followers = results.data.data.followers.length;
     }
 }

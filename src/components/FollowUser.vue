@@ -64,12 +64,12 @@ export default class FollowUser extends Vue {
     const body = {
       userId: this.userid
     }
-    await axios.put("http://localhost:3000/users/follow", body, config);
+    await axios.put(`${this.$apiUrl}/users/follow`, body, config);
     this.getFollowers();
   }
 
   async getFollowers() {
-    const results = await axios.get(`http://localhost:3000/users/followers/${this.userid}`);
+    const results = await axios.get(`${this.$apiUrl}/users/followers/${this.userid}`);
     this.followersData = results.data.data.followers;
     this.checkIfFollowed();
   }

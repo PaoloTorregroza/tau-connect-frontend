@@ -7,7 +7,7 @@ export async function checkToken(instance: Vue) {
     }
     try{
         if (instance.$store.state.userData.id) {
-            await axios.get("http://localhost:3000/users/"+instance.$store.state.userData.id,
+            await axios.get(`${instance.$apiUrl}/users/`+instance.$store.state.userData.id,
                 config
             );
         }
