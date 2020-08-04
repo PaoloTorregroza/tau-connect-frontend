@@ -64,7 +64,7 @@
 
     async comment() {
       this.$emit("update:show", false);
-      const url = `${this.apiUrl}/comments/` + this.postId;
+      const url = `${this.$apiUrl}/comments/` + this.postId;
       const config = {
         headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
       }
