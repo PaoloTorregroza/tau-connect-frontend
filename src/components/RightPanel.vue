@@ -25,7 +25,7 @@
 
     <template v-slot:append>
         <div class="footer">
-            <p>Made whit love by Paolinsky</p>
+            <p>Made with love by Paolinsky</p>
         </div>
     </template>
   </v-navigation-drawer>
