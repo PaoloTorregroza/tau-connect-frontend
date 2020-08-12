@@ -9,7 +9,7 @@
                 <v-card-text>
 					<v-card-text class="error" v-if="invalidData">Invalid data, Email already used.</v-card-text>
                     <v-text-field color="#DB842E" v-model="form.fields.name" label="Name" :rules="form.rules.name" />
-                    <v-text-field color="#DB842E" v-model="form.fields.username" label="Username" :rules="form.rules.username"/>
+                    <v-text-field color="#DB842E" v-model="form.fields.username" label="Username" placeholder="@" :rules="form.rules.username"/>
                     <v-text-field color="#DB842E" type="email" v-model="form.fields.email" label="Email" :rules="form.rules.email" />
                     <v-text-field color="#DB842E" type="password" v-model="form.fields.password" label="Password" :rules="form.rules.password" />
                 </v-card-text>
@@ -49,7 +49,7 @@
             valid: false,
             fields: {
                 email: "",
-                username: "",
+                username: "@",
                 name: "",
                 password: ""
             },

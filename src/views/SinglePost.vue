@@ -55,10 +55,14 @@
 
     async getPost() {
         const url: string = this.$apiUrl + "/posts/" + this.$route.params.id;
-        const results = await axios.get(url);
-        this.post = results.data.data;
-        if (this.post.comments) {
-            this.comments = this.post.comments.reverse();
+        try {
+            const results = await axios.get(url);
+            this.post = results.data.data;
+            if (this.post.comments) {
+                this.comments = this.post.comments.reverse();
+            }
+        } catch (e) {
+            await this.$router.push("/404");
         }
     }
   }

@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import SinglePost from "../views/SinglePost.vue";
 import User from '../views/User.vue';
+import Error404 from '../views/Error404.vue';
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ Vue.use(VueRouter)
     path: "/post/:id/:forComment",
     name: "Post",
     component: SinglePost
+  },
+  {
+    path: "*",
+    name: "Error404",
+    component: Error404
   }
 ]
 

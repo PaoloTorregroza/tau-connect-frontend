@@ -102,7 +102,7 @@ export default class LeftPanel extends Vue {
   items = [
     { title: 'Home', icon: 'mdi-home-variant', to: "/" },
     { title: 'User', icon: 'mdi-account-outline', to: "/user" },
-    { title: 'Search', icon: 'mdi-magnify', to: "/" },
+    //{ title: 'Search', icon: 'mdi-magnify', to: "/" },
   ]
 
   itemsNotLogged = [
